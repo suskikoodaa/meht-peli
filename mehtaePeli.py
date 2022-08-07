@@ -70,33 +70,37 @@ import monsterGenerator
 
 player_hitpoints = 30
 player_max_hp = player_hitpoints
-enemy_hitpoints = 10
-enemy_max_hp = enemy_hitpoints
 stick_damage = 4
 turn_counter = 0
-monster_art = f"""
-   SHRIMP ENERGY!
-      \/0~0\/
-      /( V )\\
-        | |
-    X~~/   \~~X
-       | , |
-       d   b
-"""
+# enemy_hitpoints = 10
+# monster_art = f"""
+#    SHRIMP ENERGY!
+#       \/0~0\/
+#       /( V )\\
+#         | |
+#     X~~/   \~~X
+#        | , |
+#        d   b
+# """
+
 
 print(f"As you exit the woods a funky looking creature cuts your path.")
-print(f"{monster_art}")
+monster = monsterGenerator.generate_monster(max_hp=10,max_dmg=15)
+monster_name = monster["name"]
+enemy_hitpoints = monster["hp"]
+enemy_max_hp = enemy_hitpoints
+# print(f"{monster_art}")
 print(f"You pick the nearest stick (1d{stick_damage}) you can find as your weapon.")
-while enemy_hitpoints > 0:
+while True:
     turn_counter = turn_counter + 1
     print(
-        f"\n*** Turn {turn_counter}, You: {player_hitpoints}/{player_max_hp} hp, Enemy:{enemy_hitpoints}/{enemy_max_hp} hp ***")
+        f"\n*** Turn {turn_counter}, You: {player_hitpoints}/{player_max_hp} hp, {monster_name}:{enemy_hitpoints}/{enemy_max_hp} hp ***")
     ### player turn
     action = input("What will you do? (A)ttack or (R)un ")
     if str.lower(action) == "r":
         print("Sucker! You are too slow!")
     else:
-        print("You attack the creature in front of you")
+        print(f"You attack the {monster_name} in front of you")
         roll = random.randint(1, 20)
         if roll > 10:
             print("You managed to hit!")
@@ -109,10 +113,10 @@ while enemy_hitpoints > 0:
             print("You miss.")
 
     ### enemy turn
-    print("The creature attacks!")
+    print(f"The {monster_name} attacks!")
     roll = random.randint(1, 20)
     if roll > 14:
-        print("The creature hits you.")
+        print(f"The {monster_name} hits you.")
         damage = random.randint(1, 6)
         print(f"You take {damage} damage")
         player_hitpoints = player_hitpoints - damage
@@ -120,8 +124,8 @@ while enemy_hitpoints > 0:
             print("Bwahaha. Nice trip to the guts.")
             exit(0)
     else:
-        print("The creature misses.")
-print("You have successfully slain the creature.")
+        print(f"The {monster_name} misses.")
+print(f"You have successfully slain the {monster_name}.")
 
 ##############################################################
 # 4. A cabin
