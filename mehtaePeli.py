@@ -183,3 +183,5 @@ while action != "e":
 #################################
 # 5. Jail time
 #################################
+
+print("You wake up to distant dripping sound.")
