@@ -1,8 +1,19 @@
 import random
-
+color = {
+        "black": "\u001b[30m",
+        "red": "\u001b[31m",
+        "green": "\u001b[32m",
+        "yellow": "\u001b[33m",
+        "blue": "\u001b[34m",
+        "magenta": "\u001b[35m",
+        "cyan": "\u001b[36m",
+        "white": "\u001b[37m",
+        "bwhite": "\u001b[37;1m"
+    }
+reset = "\u001b[0m"
 # print(f"Shrimpie {random.randint(1, 5)}")
 
-shrimpie = f"""
+shrimpie = f"""{color["blue"]}
    SHRIMP ENERGY!
       \/0~0\/
       /( V )\\
@@ -10,9 +21,9 @@ shrimpie = f"""
     X~~/   \~~X
        | , |
        d   b
-"""
+{reset}"""
 
-katamari = f"""
+katamari = f"""{color["green"]}
 I'LL SHOW YOU A SANDWICH!
        /_ _\\ 
       /( * )\\
@@ -20,9 +31,9 @@ I'LL SHOW YOU A SANDWICH!
     O~~/   \~~O
        |___|
        q   p
-"""
+{reset}"""
 
-glutare = f"""
+glutare = f"""{color["magenta"]}
    CHECK MY GLUTES!
        ^@^@^ 
         *w*  
@@ -30,9 +41,9 @@ glutare = f"""
      3-( X )-E
        (___)
        q   p
-"""
+{reset}"""
 
-mr_stick = f"""
+mr_stick = f"""{color["yellow"]}
    I'MMA POKE YOU!
         . .
          U  
@@ -40,7 +51,7 @@ mr_stick = f"""
       x--|--x
          |
         / \\
-"""
+{reset}"""
 monster_list = []
 monster_list.append(shrimpie)
 monster_list.append(katamari)
@@ -59,7 +70,7 @@ def generate_monster(max_hp, max_dmg):
     monster_max_dmg = random.randint(3, max_dmg)
 
     # make a random monster portrait
-    for i in range(1, 8):
+    for i in range(0, 9):
         print(monster_list[random.randint(0, len(monster_list) - 1)].split("\n")[i])
 
     # generate random monster name
@@ -68,6 +79,7 @@ def generate_monster(max_hp, max_dmg):
         "hp": monster_hp,
         "damage": monster_max_dmg,
         "name": monster_name,
+        "type": "monster"
     }
     return stats
 
