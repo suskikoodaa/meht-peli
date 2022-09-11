@@ -1,6 +1,6 @@
 import random  # tarvitaan random modulea kun arvotaan metsän kuvaustekstit
 import sys
-
+import colorama
 import monsterGenerator
 from player import Player
 import os
@@ -17,6 +17,7 @@ def p(s, c):
         "bwhite": "\u001b[37;1m"
     }
     reset = "\u001b[0m"
+    colorama.init()
     print(color[c] + s + reset)
 def death(msg):
     p(f"""
@@ -193,15 +194,15 @@ def fight(monster, player):
             player.hitpoints = player.hitpoints - damage
             if player.hitpoints <= 0:
                 if monster["type"] == "monster":
-                    print("Bwahaha. Nice trip to the guts.")
+                    p("Bwahaha. Nice trip to the guts.", "red")
                     death("Became monster food")
                     return False
-                print("You got your ass kicked.")
+                p("You got your ass kicked.", "red")
                 death("Sucked at fighting")
                 return False
         else:
             print(f"The {monster_name} misses.")
-    print(f"You have successfully slain the {monster_name}.")
+    p(f"You have successfully slain the {monster_name}.", "red")
     return True
 
 def tappelu():

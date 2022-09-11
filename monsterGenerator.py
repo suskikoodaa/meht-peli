@@ -1,4 +1,5 @@
 import random
+import colorama
 color = {
         "black": "\u001b[30m",
         "red": "\u001b[31m",
