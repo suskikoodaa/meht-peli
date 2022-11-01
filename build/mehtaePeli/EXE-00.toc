@@ -47,7 +47,7 @@
  [],
  False,
  False,
- 1662883558,
+ 1667320293,
  [('run.exe',
    'C:\\Users\\Susanna\\PycharmProjects\\ekaseikoilu\\venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])

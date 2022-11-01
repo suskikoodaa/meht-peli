@@ -14,7 +14,7 @@ color = {
 reset = "\u001b[0m"
 # print(f"Shrimpie {random.randint(1, 5)}")
 
-shrimpie = f"""{color["blue"]}
+shrimpie = f"""{color["magenta"]}
    SHRIMP ENERGY!
       \/0~0\/
       /( V )\\
@@ -24,7 +24,7 @@ shrimpie = f"""{color["blue"]}
        d   b
 {reset}"""
 
-katamari = f"""{color["green"]}
+katamari = f"""{color["magenta"]}
 I'LL SHOW YOU A SANDWICH!
        /_ _\\ 
       /( * )\\
@@ -44,7 +44,7 @@ glutare = f"""{color["magenta"]}
        q   p
 {reset}"""
 
-mr_stick = f"""{color["yellow"]}
+mr_stick = f"""{color["magenta"]}
    I'MMA POKE YOU!
         . .
          U  

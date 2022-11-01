@@ -3,10 +3,12 @@ import sys
 import colorama
 from colorama import Fore, Style
 import monsterGenerator
+import guardGenerator
 from player import Player
 from player import Weapon
 from player import WeaponType
 from player import SpecialEffect
+from playsound import playsound
 import os
 
 
@@ -111,11 +113,12 @@ def lost():
     """)
     action = ""
     # tehdään lista kuvaustekstejä, joista myöhemmin pomitaan satunnaisesti joku
-    woods_description = ["You feel the hairs on your neck stand up with every step further.",
-                         "You step on something slimy, but dare not to look what exactly it is.",
-                         "Cauldron of bats fly over you, almost touching your hair.",
-                         "You hear a distant growl, but it doesn't sound like any animal to you.",
-                         "A murder of crows take off in an distance. Did something spook them?"]
+    woods_description = [("You feel the hairs on your neck stand up with every step further.", None),
+                         ("You step on something slimy, but dare not to look what exactly it is.", None),
+                         ("Cauldron of bats fly over you, almost touching your hair.", "lepakoi.wav"),
+                         ("You hear a distant growl, but it doesn't sound like any animal to you.",
+                          "mixkit-wild-beast-roar-echo-1737.wav"),
+                         ("A murder of crows take off in an distance. Did something spook them?", "mehtakraak.wav")]
     woods_hints = [
         "Go Nami?",
         "Gonami?",
@@ -133,7 +136,10 @@ def lost():
                 death("Couldn't navigate.")
                 return False
             p(woods_hints.pop(), "green")
-        p(random.choice(woods_description), "yellow")  # tulostaa satunnaisen kuvaus tekstin
+        desc = random.choice(woods_description)
+        p(desc[0], "yellow")  # tulostaa satunnaisen kuvaus tekstin
+        if desc[1] is not None:
+            playsound("./audio/" + desc[1])
         print("You arrive at another crossroad.")
         action = action + input(
             "What direction will you go?(n, s, w, e)")  # action stringin perään laitetaan uusi suunta
@@ -243,15 +249,17 @@ def fight(monster, player):
             print(f"The {monster_name} misses.")
 
     p(f"You have successfully slain the {monster_name}.", "red")
+    playsound("./audio/mixkit-monster-pain-gasp-970.wav")
     return True
-
 
 
 def tappelu():
     print(f"As you exit the woods a funky looking creature cuts your path.")
+    playsound("./audio/mixkit-aggressive-beast-roar-13.wav")
     # print(f"{monster_art}")
     print(f"You pick the nearest stick (1d{player.weapon_damage}) you can find as your weapon.")
-    player.weapon = Weapon(min_dmg=1, max_dmg=4, weapon_type=WeaponType.STICK, to_hit=0.5, special_effect=SpecialEffect.SLOW, proc=0.5)
+    player.weapon = Weapon(min_dmg=1, max_dmg=4, weapon_type=WeaponType.STICK, to_hit=0.5,
+                           special_effect=SpecialEffect.SLOW, proc=0.5)
     return fight(monsterGenerator.generate_monster(max_hp=10, max_dmg=15), player)
 
 
@@ -335,34 +343,43 @@ def jail():
                 player.inventory.add_item("stone")
         if input_choice in ["pockets", "inventory", "items"]:
             player.inventory.print_inventory()
-        if words[0] in ["pee", "toilet", "piss"]:
-            p("You take a leak against the door. The pool of liquid slowly freezes. This could work as a trap!",
+        if words[0] in ["break", "smash", "destroy", "shatter", "burst"]:
+            if len(words) < 2:
+                p("Break what?", "bwhite")
+                continue
+        if words[1] in ["door"]:
+            p("You manage to break down the rotten door, but the noise seems to have alarmed a guard by the sounds of it.",
               "bwhite")
-            pee_in_jail = True
-        if words[0] in ["knock", "call", "yell"]:
-            if pee_in_jail:
-                guard_unconscious = True
-                p("A guard comes to open the door to see what the commotion is about. They slip on the frozen pee and bang their head, knocking them unconcious.",
-                  "bwhite")
-            else:
-                p("The guard comes in and knocks you on your ass.", "bwhite")
-                p(f"You {random.choice(['twat', 'turdling', 'wanker', 'pimple', 'imbecile', 'snollygoster', 'cunt', 'pillock', 'cum dumpster', 'piss flaps', 'fuckwit', 'twatopotamus', 'cock holster', 'ass wipe', 'dingleberry', 'poo on a stick'])}, what {random.choice(['the hell', 'the fuck', 'in tarnation'])} do you want?",
-                  "orange")
-        if words[0] in ["check"] and guard_unconscious:
-            p("You search the guards body and find a club on them. You take it and sneak out of the dungeon.", "bwhite")
-            player.weapon_damage = 5
-    return True
+    if words[0] in ["pee", "toilet", "piss"]:
+        p("You take a leak against the door. The pool of liquid slowly freezes. This could work as a trap!",
+          "bwhite")
+        pee_in_jail = True
+    if words[0] in ["knock", "call", "yell"]:
+        if pee_in_jail:
+            guard_unconscious = True
+            p("A guard comes to open the door to see what the commotion is about. They slip on the frozen pee and bang their head, knocking them unconcious.",
+              "bwhite")
+        else:
+            p("The guard comes in and knocks you on your ass.", "bwhite")
+            p(f"You {random.choice(['twat', 'turdling', 'wanker', 'pimple', 'imbecile', 'snollygoster', 'cunt', 'pillock', 'cum dumpster', 'piss flaps', 'fuckwit', 'twatopotamus', 'cock holster', 'ass wipe', 'dingleberry', 'poo on a stick'])}, what {random.choice(['the hell', 'the fuck', 'in tarnation'])} do you want?",
+              "orange")
+    if words[0] in ["check"] and guard_unconscious:
+        p("You search the guards body and find a club on them. You take it and sneak out of the dungeon.", "bwhite")
+        player.weapon_damage = 5
+
+
+
 
 
 def main():
-    # if not woods():
-    #     return
-    # if not lost():
-    #     return
+    if not woods():
+        return
+    if not lost():
+        return
     if not tappelu():
         return
-    # if not cabin():
-    #     return
+    if not cabin():
+        return
     if not jail():
         return
 
