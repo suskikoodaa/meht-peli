@@ -90,6 +90,7 @@ def woods():
     while action != "1" and action != "2" and action != "3":  # toistetaan kunnes arvo on 1, 2 tai 3
         action = input("What do you do? ")  # tallentaa actioniin käyttäjän syötteen
         if action == "1":  # jos käyttäjän valitsema action on 1, niin peli loppuu
+            playsound(resource_path("audio")+"/treefall.wav")
             print("The branch you stepped on snaps and you died.")
             death("Too fat to sit on branches")
             return False
@@ -380,8 +381,6 @@ def resource_path(relative_path):
 
 
 def main():
-    print(resource_path("audio"))
-
     if not woods():
         return
     if not lost():
