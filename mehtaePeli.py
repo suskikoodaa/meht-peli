@@ -139,7 +139,7 @@ def lost():
         desc = random.choice(woods_description)
         p(desc[0], "yellow")  # tulostaa satunnaisen kuvaus tekstin
         if desc[1] is not None:
-            playsound("./audio/" + desc[1])
+            playsound(f"{resource_path('audio')}/{desc[1]}")
         print("You arrive at another crossroad.")
         action = action + input(
             "What direction will you go?(n, s, w, e)")  # action stringin perään laitetaan uusi suunta
@@ -249,13 +249,13 @@ def fight(monster, player):
             print(f"The {monster_name} misses.")
 
     p(f"You have successfully slain the {monster_name}.", "red")
-    playsound("./audio/mixkit-monster-pain-gasp-970.wav")
+    playsound(f"{resource_path('audio')}/mixkit-monster-pain-gasp-970.wav")
     return True
 
 
 def tappelu():
     print(f"As you exit the woods a funky looking creature cuts your path.")
-    playsound("./audio/mixkit-aggressive-beast-roar-13.wav")
+    playsound(f"{resource_path('audio')}/mixkit-aggressive-beast-roar-13.wav")
     # print(f"{monster_art}")
     print(f"You pick the nearest stick (1d{player.weapon_damage}) you can find as your weapon.")
     player.weapon = Weapon(min_dmg=1, max_dmg=4, weapon_type=WeaponType.STICK, to_hit=0.5,
@@ -368,10 +368,20 @@ def jail():
         player.weapon_damage = 5
 
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
 
+    return os.path.join(base_path, relative_path)
 
 
 def main():
+    print(resource_path("audio"))
+
     if not woods():
         return
     if not lost():
