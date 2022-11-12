@@ -56,6 +56,7 @@ def death(msg):
                          .%%%@@@|%    |    % @@@%%@%%%%
                     _.%%%%%%@@@@@@%%_/%\\_%@@%%@@@@@@@%%%%%%
     """, "magenta")
+    playsound(resource_path("audio") + "/kello.wav")
 
     # input("Press enter to continue.")
 

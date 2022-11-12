@@ -51,3 +51,9 @@ BACK TO YOUR DUNGEON!
       [_|_]
        d b
 {reset}"""
+
+guard_list = []
+guard_list.append(guard_1)
+guard_list.append(guard_2)
+guard_list.append(guard_3)
+guard_list.append(guard_4)
