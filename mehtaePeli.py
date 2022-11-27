@@ -10,6 +10,8 @@ from player import WeaponType
 from player import SpecialEffect
 from playsound import playsound
 import os
+from pyfiglet import Figlet
+
 
 
 def p(s, c):
@@ -66,11 +68,9 @@ player = Player(hitpoints=30, weapon_damage=1, magicpoints=0)
 ############################################################################
 # Intro
 ############################################################################
-p(r"""
-      _     ___       _  _   _
-|\/| |_ |_|  |  /_\  |_ |_) |_ |   |
-|  | |_ | |  | /   \ |_ |   |_ |__ |
-""", "red")
+f = Figlet(font='barbwire')
+p(f.renderText('Mehtae\npeli'),"red")
+
 player_name = input("Your name? ")  # kysyy pelaajan nimen pelin alussa
 print(f"Welcome {player_name}")  # toivottaa pelaajan tervetulleeksi
 
@@ -78,6 +78,8 @@ print(f"Welcome {player_name}")  # toivottaa pelaajan tervetulleeksi
 ############################################################################
 # 1. Woods
 ############################################################################
+f = Figlet(font='digital')
+p(f.renderText('Chapter 1: Woods'),"red")
 def woods():
     print(
         f"""
@@ -101,6 +103,7 @@ def woods():
             return False
         elif action == "3":  # jos käyttäjän valitsema action on 3, peli jatkuu
             print("You find a candy bar and ripped piece of a map.")
+            player.food += 1
             return True
         else:  # jos käyttäjän valinta ei osu mihinkään vaihtoehdoista tulostetaan herjaus, ja kysytään uudestaan
             print("Trying to cheat, eh?")
@@ -110,8 +113,8 @@ def woods():
 # 2. Lost
 ############################################################################
 def lost():
-    print(f"""You eat the candy bar and take the map piece to your hands. It seems to lead
-    you towards crossroads. The candy wrapper informs you that to get out of the woods you have to go Nami.
+    print(f"""You take the map piece to your hands. It seems to lead
+    you towards crossroads. Someone has written to the corner of the map, that to get out of the woods you have to go Nami.
     """)
     action = ""
     # tehdään lista kuvaustekstejä, joista myöhemmin pomitaan satunnaisesti joku
