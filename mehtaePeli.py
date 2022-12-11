@@ -12,6 +12,8 @@ from playsound import playsound
 import os
 from pyfiglet import Figlet
 
+figlet_ch = Figlet(font='digital')
+figlet_intro = Figlet(font='barbwire')
 
 
 def p(s, c):
@@ -68,8 +70,7 @@ player = Player(hitpoints=30, weapon_damage=1, magicpoints=0)
 ############################################################################
 # Intro
 ############################################################################
-f = Figlet(font='barbwire')
-p(f.renderText('Mehtae\npeli'),"red")
+p(figlet_intro.renderText('Mehtae\npeli'),"red")
 
 player_name = input("Your name? ")  # kysyy pelaajan nimen pelin alussa
 print(f"Welcome {player_name}")  # toivottaa pelaajan tervetulleeksi
@@ -78,9 +79,8 @@ print(f"Welcome {player_name}")  # toivottaa pelaajan tervetulleeksi
 ############################################################################
 # 1. Woods
 ############################################################################
-f = Figlet(font='digital')
-p(f.renderText('Chapter 1: Woods'),"red")
 def woods():
+    p(figlet_ch.renderText('Chapter 1: Woods'), "red")
     print(
         f"""
     You are in the middle of the woods. You don't know how did you even get there.
@@ -113,6 +113,7 @@ def woods():
 # 2. Lost
 ############################################################################
 def lost():
+    p(figlet_ch.renderText('Chapter 2: Lost'), "red")
     print(f"""You take the map piece to your hands. It seems to lead
     you towards crossroads. Someone has written to the corner of the map, that to get out of the woods you have to go Nami.
     """)
@@ -156,7 +157,6 @@ def lost():
 ############################################################################
 # 3. FIGHT!
 ############################################################################
-
 # taistelussa tarvitaan
 # 1. aseet
 #   - to_hit, damage
@@ -259,6 +259,7 @@ def fight(monster, player):
 
 
 def tappelu():
+    p(figlet_ch.renderText('Chapter 3: FIGHT!'), "red")
     print(f"As you exit the woods a funky looking creature cuts your path.")
     playsound(f"{resource_path('audio')}/mixkit-aggressive-beast-roar-13.wav")
     # print(f"{monster_art}")
@@ -272,6 +273,7 @@ def tappelu():
 # 4. A cabin
 ##############################################################
 def cabin():
+    p(figlet_ch.renderText('Chapter 4: A cabin'), "red")
     print("As you continue the path away from the woods you stumble upon a small cabin")
     action = input("What will you do? (G)o in or (C)ontinue your way. ")
     if str.lower(action) == "c":
@@ -322,6 +324,7 @@ def cabin():
 # 5. Jail time
 #################################
 def jail():
+    p(figlet_ch.renderText('Chapter 5: Jail time'), "red")
     pee_in_jail = False
     guard_unconscious = False
     print(
@@ -372,6 +375,8 @@ def jail():
         p("You search the guards body and find a club on them. You take it and sneak out of the dungeon.", "bwhite")
         player.weapon_damage = 5
 
+def escape():
+    p(figlet_ch.renderText('Chapter 6: ESCAPE!'), "red")
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
